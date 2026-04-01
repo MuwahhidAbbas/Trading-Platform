@@ -1,6 +1,6 @@
 [build]
   base = "artifacts/trading-terminal"
-  command = "npm install && npm run build"
+  command = "pnpm install --no-frozen-lockfile && pnpm run build"
   publish = "dist/public"
 
 [build.environment]
