@@ -9,23 +9,32 @@ export default function Landing() {
   return (
     <div className="min-h-screen w-full bg-background text-foreground selection:bg-primary/30">
       <div className="max-w-5xl mx-auto px-6 py-24 flex flex-col gap-24">
-        
-        {/* Hero */}
-        <div className="flex flex-col gap-0 animate-in fade-in slide-in-from-bottom-4 duration-1000">
-          
-          {/* Intelligence Core — sits above hero text */}
+
+        {/* Hero — position:relative so the absolutely placed core stays contained */}
+        <div
+          className="animate-in fade-in slide-in-from-bottom-4 duration-1000"
+          style={{ position: 'relative', overflow: 'hidden', minHeight: '420px' }}
+        >
+          {/* Intelligence Core — pure atmospheric background, never affects layout */}
           <div
-            className="w-full relative"
-            style={{ height: '420px', marginBottom: '-32px', marginTop: '-40px' }}
+            style={{
+              position: 'absolute',
+              top: '35%',
+              left: '50%',
+              transform: 'translate(-50%, -50%)',
+              width: '600px',
+              height: '500px',
+              maxWidth: '100vw',
+              zIndex: 0,
+              pointerEvents: 'none',
+              opacity: 0.6,
+            }}
           >
-            <IntelligenceCore
-              isTerminalHovered={isTerminalHovered}
-              className="absolute inset-0"
-            />
+            <IntelligenceCore isTerminalHovered={isTerminalHovered} className="w-full h-full" />
           </div>
 
-          {/* Hero text — sits below/overlapping the core */}
-          <div className="flex flex-col gap-8 max-w-3xl relative z-10">
+          {/* Hero text — sits in front, owns its own space, never moved by core */}
+          <div style={{ position: 'relative', zIndex: 2 }} className="flex flex-col gap-8 max-w-3xl pt-48">
             <div className="flex items-center gap-3 text-xs font-mono text-muted-foreground tracking-widest uppercase">
               <div className="w-2 h-2 rounded-full bg-primary/80" />
               Internal Prototype
@@ -54,7 +63,7 @@ export default function Landing() {
         {/* Architecture */}
         <div className="flex flex-col gap-12">
           <h2 className="text-xl font-medium tracking-tight">System Architecture</h2>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-5 gap-px bg-border">
             {[
               {
@@ -95,7 +104,7 @@ export default function Landing() {
             ))}
           </div>
         </div>
-        
+
         {/* Footer */}
         <div className="pt-12 flex justify-between items-center text-xs text-muted-foreground font-mono uppercase tracking-widest border-t border-border">
           <span>NEXUS Research</span>
