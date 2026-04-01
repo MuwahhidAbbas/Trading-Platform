@@ -1,15 +1,26 @@
 openapi: 3.1.0
 info:
-  # Do not change the title, if the title changes, the import paths will be broken
   title: Api
   version: 0.1.0
-  description: API specification
+  description: Quantitative Trading Intelligence Platform API
 servers:
   - url: /api
     description: Base API path
 tags:
   - name: health
     description: Health operations
+  - name: market
+    description: Market data operations
+  - name: forecast
+    description: LSTM forecast operations
+  - name: agents
+    description: NEAT agent decision operations
+  - name: aggregation
+    description: Multi-agent aggregation operations
+  - name: reasoning
+    description: LLM reasoning layer operations
+  - name: decision
+    description: Final decision engine operations
 paths:
   /healthz:
     get:
@@ -24,6 +35,160 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+
+  /market/price:
+    get:
+      operationId: getMarketPrice
+      tags: [market]
+      summary: Get current market price data
+      description: Returns current price, OHLCV, and symbol info
+      parameters:
+        - name: symbol
+          in: query
+          required: false
+          schema:
+            type: string
+            default: BTC/USD
+      responses:
+        "200":
+          description: Market price data
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MarketPrice"
+
+  /market/candles:
+    get:
+      operationId: getMarketCandles
+      tags: [market]
+      summary: Get OHLCV candle data
+      description: Returns historical OHLCV candles for charting
+      parameters:
+        - name: symbol
+          in: query
+          required: false
+          schema:
+            type: string
+            default: BTC/USD
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 120
+      responses:
+        "200":
+          description: OHLCV candle data
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CandleData"
+
+  /forecast:
+    get:
+      operationId: getForecast
+      tags: [forecast]
+      summary: Get LSTM price forecast
+      description: Returns LSTM model forecast including direction probability and expected range
+      parameters:
+        - name: symbol
+          in: query
+          required: false
+          schema:
+            type: string
+            default: BTC/USD
+      responses:
+        "200":
+          description: LSTM forecast output
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ForecastOutput"
+
+  /agents/decision:
+    get:
+      operationId: getAgentDecision
+      tags: [agents]
+      summary: Get NEAT agent decisions
+      description: Returns multi-agent trade intent and risk scores from NEAT networks
+      parameters:
+        - name: symbol
+          in: query
+          required: false
+          schema:
+            type: string
+            default: BTC/USD
+      responses:
+        "200":
+          description: NEAT agent decisions
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AgentDecisionOutput"
+
+  /aggregate:
+    get:
+      operationId: getAggregation
+      tags: [aggregation]
+      summary: Get regime-weighted aggregation
+      description: Returns multi-agent aggregated signal with regime-based weights
+      parameters:
+        - name: symbol
+          in: query
+          required: false
+          schema:
+            type: string
+            default: BTC/USD
+      responses:
+        "200":
+          description: Aggregation output
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AggregationOutput"
+
+  /reasoning:
+    get:
+      operationId: getReasoning
+      tags: [reasoning]
+      summary: Get reasoning layer output
+      description: Returns structured LLM-style reasoning context and confidence
+      parameters:
+        - name: symbol
+          in: query
+          required: false
+          schema:
+            type: string
+            default: BTC/USD
+      responses:
+        "200":
+          description: Reasoning layer output
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ReasoningOutput"
+
+  /decision:
+    get:
+      operationId: getFinalDecision
+      tags: [decision]
+      summary: Get final decision engine output
+      description: Returns combined decision from all 5 intelligence layers
+      parameters:
+        - name: symbol
+          in: query
+          required: false
+          schema:
+            type: string
+            default: BTC/USD
+      responses:
+        "200":
+          description: Final decision output
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FinalDecisionOutput"
+
 components:
   schemas:
     HealthStatus:
@@ -34,3 +199,300 @@ components:
       required:
         - status
 
+    MarketPrice:
+      type: object
+      properties:
+        symbol:
+          type: string
+        price:
+          type: number
+        change24h:
+          type: number
+        changePercent24h:
+          type: number
+        volume24h:
+          type: number
+        high24h:
+          type: number
+        low24h:
+          type: number
+        timestamp:
+          type: string
+      required:
+        - symbol
+        - price
+        - change24h
+        - changePercent24h
+        - volume24h
+        - high24h
+        - low24h
+        - timestamp
+
+    Candle:
+      type: object
+      properties:
+        timestamp:
+          type: string
+        open:
+          type: number
+        high:
+          type: number
+        low:
+          type: number
+        close:
+          type: number
+        volume:
+          type: number
+      required:
+        - timestamp
+        - open
+        - high
+        - low
+        - close
+        - volume
+
+    CandleData:
+      type: object
+      properties:
+        symbol:
+          type: string
+        candles:
+          type: array
+          items:
+            $ref: "#/components/schemas/Candle"
+      required:
+        - symbol
+        - candles
+
+    ForecastOutput:
+      type: object
+      properties:
+        symbol:
+          type: string
+        directionProbability:
+          type: number
+          description: Probability of upward price movement (0-1)
+        expectedRange:
+          type: number
+          description: Expected price range in USD
+        nextHighDistance:
+          type: number
+          description: Distance to next predicted high in USD
+        nextLowDistance:
+          type: number
+          description: Distance to next predicted low in USD
+        modelConfidence:
+          type: number
+          description: Model confidence score (0-1)
+        horizon:
+          type: string
+          description: Forecast time horizon (e.g., 4h, 1d)
+        timestamp:
+          type: string
+      required:
+        - symbol
+        - directionProbability
+        - expectedRange
+        - nextHighDistance
+        - nextLowDistance
+        - modelConfidence
+        - horizon
+        - timestamp
+
+    AgentDecisionOutput:
+      type: object
+      properties:
+        symbol:
+          type: string
+        agents:
+          type: array
+          items:
+            $ref: "#/components/schemas/SingleAgentDecision"
+        consensusIntent:
+          type: string
+          enum: [BUY, SELL, HOLD]
+        consensusScore:
+          type: number
+        timestamp:
+          type: string
+      required:
+        - symbol
+        - agents
+        - consensusIntent
+        - consensusScore
+        - timestamp
+
+    SingleAgentDecision:
+      type: object
+      properties:
+        agentId:
+          type: string
+        tradeIntent:
+          type: string
+          enum: [BUY, SELL, HOLD]
+        directionBias:
+          type: number
+          description: Directional bias from -1 (strong sell) to 1 (strong buy)
+        riskScore:
+          type: number
+          description: Risk score from 0 (low risk) to 1 (high risk)
+        exitBias:
+          type: number
+          description: Exit urgency score from 0 to 1
+        fitness:
+          type: number
+          description: NEAT fitness score
+      required:
+        - agentId
+        - tradeIntent
+        - directionBias
+        - riskScore
+        - exitBias
+        - fitness
+
+    AggregationOutput:
+      type: object
+      properties:
+        symbol:
+          type: string
+        regime:
+          type: string
+          enum: [TRENDING, RANGING, VOLATILE, BREAKOUT]
+        weights:
+          $ref: "#/components/schemas/AgentWeights"
+        aggregatedSignal:
+          type: number
+          description: Aggregated signal from -1 to 1
+        signalLabel:
+          type: string
+          enum: [STRONG_BUY, BUY, NEUTRAL, SELL, STRONG_SELL]
+        regimeConfidence:
+          type: number
+        timestamp:
+          type: string
+      required:
+        - symbol
+        - regime
+        - weights
+        - aggregatedSignal
+        - signalLabel
+        - regimeConfidence
+        - timestamp
+
+    AgentWeights:
+      type: object
+      properties:
+        lstmWeight:
+          type: number
+        neatWeight:
+          type: number
+        momentumWeight:
+          type: number
+        meanReversionWeight:
+          type: number
+      required:
+        - lstmWeight
+        - neatWeight
+        - momentumWeight
+        - meanReversionWeight
+
+    ReasoningOutput:
+      type: object
+      properties:
+        symbol:
+          type: string
+        contextLabel:
+          type: string
+          description: Market context classification label
+        confidenceScore:
+          type: number
+          description: Overall reasoning confidence (0-1)
+        vetoSignal:
+          type: boolean
+          description: Whether reasoning layer vetoes the current signal
+        vetoReason:
+          type: string
+          nullable: true
+        reasoningSummary:
+          type: string
+          description: Structured reasoning narrative
+        keyFactors:
+          type: array
+          items:
+            type: string
+        riskWarnings:
+          type: array
+          items:
+            type: string
+        timestamp:
+          type: string
+      required:
+        - symbol
+        - contextLabel
+        - confidenceScore
+        - vetoSignal
+        - reasoningSummary
+        - keyFactors
+        - riskWarnings
+        - timestamp
+
+    FinalDecisionOutput:
+      type: object
+      properties:
+        symbol:
+          type: string
+        action:
+          type: string
+          enum: [BUY, SELL, HOLD, VETO]
+        confidence:
+          type: number
+          description: Final decision confidence (0-1)
+        positionSize:
+          type: number
+          description: Recommended position size as fraction of portfolio (0-1)
+        stopLoss:
+          type: number
+          description: Suggested stop-loss price
+        takeProfit:
+          type: number
+          description: Suggested take-profit price
+        riskRewardRatio:
+          type: number
+        layerVotes:
+          $ref: "#/components/schemas/LayerVotes"
+        executionRecommendation:
+          type: string
+        timestamp:
+          type: string
+      required:
+        - symbol
+        - action
+        - confidence
+        - positionSize
+        - stopLoss
+        - takeProfit
+        - riskRewardRatio
+        - layerVotes
+        - executionRecommendation
+        - timestamp
+
+    LayerVotes:
+      type: object
+      properties:
+        lstmVote:
+          type: string
+          enum: [BUY, SELL, HOLD]
+        agentVote:
+          type: string
+          enum: [BUY, SELL, HOLD]
+        aggregationVote:
+          type: string
+          enum: [BUY, SELL, HOLD]
+        reasoningVote:
+          type: string
+          enum: [BUY, SELL, HOLD, VETO]
+      required:
+        - lstmVote
+        - agentVote
+        - aggregationVote
+        - reasoningVote

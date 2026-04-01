@@ -1,0 +1,270 @@
+You are a senior AI systems engineer AND elite product design engineer responsible for building a **high-credibility architectural prototype** of a multi-layer trading intelligence system.
+
+This project is NOT a demo app.
+
+This must visually and structurally resemble an **internal quantitative research platform used by professional trading teams**.
+
+The FRONTEND EXPERIENCE is a PRIMARY REQUIREMENT and carries equal importance to backend architecture.
+
+Failure to achieve exceptional UI/UX quality means the task is incomplete.
+
+---
+
+NON-NEGOTIABLE GLOBAL RULES
+
+1. Entire project must use 100% FREE tools.
+2. NO credit card required anywhere.
+3. Must run fully inside Replit.
+4. Dependencies auto-install.
+5. Zero manual configuration.
+6. Repository must run immediately after cloning.
+7. Frontend deployable directly to Netlify.
+
+---
+
+🔥🔥🔥 FRONTEND IS CRITICAL (READ CAREFULLY) 🔥🔥🔥
+
+The interface MUST look like a premium institutional trading terminal.
+
+ABSOLUTE REQUIREMENTS:
+
+• No generic AI dashboard appearance.
+• No neon colors.
+• No glowing gradients.
+• No cyberpunk themes.
+• No template-looking layouts.
+• No childish animations.
+• No stock UI kits.
+
+The UI must feel:
+
+* calm
+* intelligent
+* expensive
+* minimal
+* futuristic but believable
+* engineered, not decorated
+
+Think:
+quant research lab + Bloomberg Terminal + modern Apple-level restraint.
+
+---
+
+VISUAL DESIGN SYSTEM (STRICT)
+
+Color philosophy:
+
+* Deep matte dark surfaces
+* Soft neutral tones
+* Subtle contrast hierarchy
+* Accent color used VERY sparingly
+* No RGB colors
+* No saturation-heavy palettes
+
+Allowed palette example:
+
+* charcoal
+* graphite
+* slate
+* muted steel blue accents
+* soft off-white typography
+
+Lighting:
+
+* soft elevation shadows only
+* zero glow effects
+* depth through layering, not color
+
+Typography:
+
+* Inter OR Geist ONLY
+* Strong hierarchy
+* Generous spacing
+* Clean numeric alignment
+
+---
+
+PERFORMANCE REQUIREMENTS
+
+UI must maintain smooth rendering under 60 FPS.
+
+STRICTLY:
+
+* avoid heavy animation libraries
+* no particle effects
+* no canvas overload
+* no unnecessary re-renders
+
+Use only:
+
+* subtle opacity transitions
+* micro motion (150–250ms)
+* professional motion curves
+
+---
+
+MANDATORY UX FLOW
+
+You MUST design THREE EXPERIENCES:
+
+---
+
+## 1️⃣ CINEMATIC LOADING EXPERIENCE
+
+When app opens:
+
+• Elegant minimal loading screen
+• Centered system name
+• Soft animated progress indicator
+• Sequential system initialization messages:
+
+Initializing market feed...
+Loading prediction layer...
+Bootstrapping agents...
+Calibrating reasoning engine...
+System ready.
+
+Must feel like a real research system starting up.
+
+NO spinning loaders.
+NO flashy animation.
+
+---
+
+## 2️⃣ LANDING PAGE (EXTREMELY IMPORTANT)
+
+This page must make a client say:
+“this looks like a funded startup product.”
+
+Include:
+
+* Hero section explaining layered intelligence visually
+* Animated architecture diagram (subtle)
+* System philosophy section
+* Layer explanations
+* “Enter Terminal” button
+
+Design must feel editorial and premium.
+
+NO marketing fluff.
+NO gradients.
+NO big bright buttons.
+
+---
+
+## 3️⃣ MAIN TRADING TERMINAL
+
+Layout inspired by professional terminals.
+
+LEFT:
+Market chart panel.
+
+RIGHT STACKED MODULES:
+• LSTM Forecast
+• Agent Decisions
+• Aggregation Weights
+• Reasoning Output
+• Final Decision Engine
+
+Each module must look like an independent research component.
+
+Panels must feel:
+modular, inspectable, analytical.
+
+---
+
+BACKEND ARCHITECTURE (IMPLEMENT FULL SLICE)
+
+LAYER 1 — LSTM Forecast API
+Endpoint: /forecast
+
+Outputs:
+direction_probability
+expected_range
+next_high_distance
+next_low_distance
+
+Auto-train lightweight model if missing.
+
+---
+
+LAYER 2 — NEAT Agents
+Use neat-python.
+
+Outputs:
+trade_intent
+direction_bias
+risk_score
+exit_bias
+
+Endpoint: /agents/decision
+
+---
+
+LAYER 3 — Multi-Agent Aggregation
+Regime-based weighting logic.
+
+Endpoint: /aggregate
+
+---
+
+LAYER 4 — Reasoning Layer (LLM Simulation)
+NO external APIs.
+
+Return structured reasoning:
+
+context_label
+confidence_score
+veto_signal
+reasoning_summary
+
+Endpoint: /reasoning
+
+---
+
+LAYER 5 — Final Decision Engine
+Combine all layers.
+
+Endpoint: /decision
+
+---
+
+TECH STACK (STRICT)
+
+Backend:
+Python + FastAPI + SQLite
+
+Frontend:
+React + Vite
+TailwindCSS (heavily customized)
+Recharts
+
+---
+
+AUTO SETUP
+
+Create:
+
+requirements.txt
+package.json
+README.md
+startup scripts
+
+Single command must run system:
+
+npm run dev
+
+(frontend + backend together)
+
+---
+
+FINAL OUTPUT EXPECTATION
+
+The result must look like:
+
+an early internal prototype from a quantitative hedge fund research team.
+
+If the interface looks like a normal dashboard, redesign it until it does NOT.
+
+Design excellence is mandatory.
+Begin implementation now.
