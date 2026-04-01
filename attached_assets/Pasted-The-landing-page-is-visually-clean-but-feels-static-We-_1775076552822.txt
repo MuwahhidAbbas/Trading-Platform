@@ -1,0 +1,127 @@
+The landing page is visually clean but feels static.
+We need a premium institutional motion identity — not decoration.
+
+Add a **Reactive Intelligence Logo System** to the hero section.
+
+---
+
+GOAL
+
+The page must feel alive even when nothing is clicked.
+
+The motion should communicate:
+
+* computation
+* intelligence flow
+* system awareness
+
+NOT flashy animation, NOT neon effects, NOT startup-style gradients.
+
+Think: Apple keynote motion + Bloomberg terminal restraint + futuristic research lab.
+
+---
+
+FEATURE: MOVING LOGO / CORE VISUAL
+
+Create a central animated logo element positioned near the hero headline.
+
+Design concept:
+A minimal geometric “intelligence core” made from:
+
+* orbiting nodes
+* subtle connecting lines
+* slow rotational motion
+* soft depth/parallax
+
+Style:
+
+* matte white / soft gray tones only
+* ultra subtle glow (almost invisible)
+* no bright colors
+* premium scientific aesthetic
+
+---
+
+MOTION BEHAVIOR
+
+1. Idle Motion (always active)
+
+* very slow orbital movement
+* breathing scale animation (1–2%)
+* continuous smooth motion at 60fps
+* must feel calm and expensive
+
+2. Cursor Interaction
+   When cursor moves:
+
+* nodes slightly repel or attract toward cursor
+* rotation direction subtly shifts
+* parallax depth reacts to mouse position
+* response must be smooth and inertial (no snapping)
+
+3. Scroll Awareness
+
+* logo slowly transitions position or perspective during scroll
+* slight depth rotation tied to scroll progress
+
+---
+
+TECH REQUIREMENTS
+
+Use:
+
+* React + TypeScript
+* Framer Motion OR react-three-fiber (preferred if performant)
+* requestAnimationFrame-based motion
+* GPU-friendly transforms only
+* zero layout thrashing
+
+Performance:
+
+* locked near 60fps
+* lightweight calculations
+* pause heavy effects on low-performance devices
+
+---
+
+VISUAL QUALITY RULES (STRICT)
+
+DO NOT USE:
+
+* neon colors
+* glowing gradients
+* cyberpunk aesthetics
+* particle explosions
+* excessive blur
+* AI cliché visuals
+
+USE:
+
+* restraint
+* minimalism
+* smooth physics-like motion
+* subtle elegance
+
+---
+
+EXTRA DETAIL (IMPORTANT)
+
+When user hovers “Enter Terminal”:
+
+* logo subtly converges inward
+* motion tightens
+* gives feeling system is activating
+
+---
+
+DELIVERABLE
+
+A reusable component:
+
+/components/IntelligenceCore.tsx
+
+Integrated into hero section and fully responsive.
+
+The result should feel like a living quantitative intelligence engine, not a marketing animation.
+
+Proceed with implementation.
